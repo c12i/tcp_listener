@@ -1,3 +1,5 @@
+use std::net::TcpListener;
+
 pub struct Server {
     address: String,
 }
@@ -10,6 +12,6 @@ impl Server {
     }
 
     pub fn run(self) {
-        println!("Server running on http://{}", self.address);
+        let listener = TcpListener::bind(&self.address);
     }
 }
