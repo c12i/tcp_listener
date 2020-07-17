@@ -1,49 +1,5 @@
-mod server {
-    pub struct Server {
-        address: String,
-    }
-    
-    impl Server {
-        pub fn new(address: String) -> Self {
-            Server {
-                address: address.to_string()
-            }
-        }
-    
-        pub fn run(self) {
-            println!("Server running on http://{}", self.address);
-        }
-    }
-}
-
-mod http {
-    mod request {
-        pub struct Request {
-            path: String,
-            query: Option<String>,
-            method: super::method::Method,
-        }
-    }
-
-    mod response {
-
-    }
-
-    mod method {
-        #[derive(Debug)]
-        pub enum Method {
-            GET,
-            POST,
-            PUT,
-            PATCH,
-            DELETE,
-            OPTIONS,
-            TRACE,
-            CONNECT,
-            HEAD
-        }
-    }
-}
+mod server;
+mod http;
 
 use server::Server;
 
