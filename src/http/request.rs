@@ -20,8 +20,9 @@ impl Request {
 impl TryFrom<&[u8]> for Request {
     type Error = ParseError;
 
+    // to => GET /search?name=example&sort=1 HTTP/1.1
     fn try_from(value: &[u8]) -> Result<Self, Self::Error> {
-        let request = str::from_utf8(buffer)?;
+        let request = str::from_utf8(value)?;
     }
 }
 
