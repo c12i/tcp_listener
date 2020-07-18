@@ -12,6 +12,17 @@ impl Server {
     }
 
     pub fn run(self) {
-        let listener = TcpListener::bind(&self.address);
+        println!("Server running on http://{}", self.address);
+        let listener = TcpListener::bind(&self.address).expect("Error binding TcpListener");
+
+        loop {
+            match listener.accept() {
+                Ok((stream, _)) => {
+                    let a = 5;
+                    println!("OK");
+                },
+                Err(err) => println!("Failed to establish a connection: {}", err),
+            }
+        }
     }
 }
