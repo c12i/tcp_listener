@@ -39,13 +39,17 @@ impl TryFrom<&[u8]> for Request {
 
         // handling the query string, if present, reassign to query var
         // else leave as None
-        let mut query_string = None;
+        let mut query = None;
         if let Some(i) = path.find('?') {
-            query_string = Some(&path[i+1..]);
+            query = Some(path[i+1..].to_string());
             path = &path[..i];
         }
 
-        unimplemented!()
+        Ok(Self {
+            path: path.to_string(),
+            query,
+            method
+        })
     }
 }
 
