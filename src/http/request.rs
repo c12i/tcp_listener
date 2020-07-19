@@ -5,24 +5,24 @@ use std::str::{self, Utf8Error};
 use std::fmt::{Display,Result as FmtResult, Formatter};
 use crate::utils::get_next_word;
 
-pub struct Request {
-    path: String,
-    query: Option<String>,
+pub struct Request<'buf> {
+    path: &'buf str,
+    query: Option<&'buf str>,
     method: Method,
 }
 
-impl Request {
+impl<'buf> Request<'buf> {
     fn from_byte_array(buffer: &[u8]) -> Result<Self, String> {
         unimplemented!()
     }
 }
 
 // when we implement `TryFrom`, the compiler will auto-generate code that implements `TryInto` trait for type T
-impl TryFrom<&[u8]> for Request {
+impl<'buf> TryFrom<&'buf[u8]> for Request<'buf> {
     type Error = ParseError;
 
     // to => GET /search?name=example&sort=1 HTTP/1.1
-    fn try_from(value: &[u8]) -> Result<Self, Self::Error> {
+    fn try_from(value: &'buf[u8]) -> Result<Request<'buf>, Self::Error> {
         // convert &[u8] to &str
         let request = str::from_utf8(value)?;
 
@@ -41,14 +41,14 @@ impl TryFrom<&[u8]> for Request {
         // else leave as None
         let mut query = None;
         if let Some(i) = path.find('?') {
-            query = Some(path[i+1..].to_string());
+            query = Some(&path[i+1..]);
             path = &path[..i];
         }
 
         Ok(Self {
-            path: path.to_string(),
+            path,
             query,
-            method
+            method,
         })
     }
 }
@@ -92,6 +92,4 @@ impl From<MethodError> for ParseError {
     }
 }
 
-impl Error for ParseError {
-
-}
+impl Error for ParseError {}
