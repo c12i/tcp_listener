@@ -6,6 +6,7 @@ use std::str::{self, Utf8Error};
 use std::fmt::{Display,Result as FmtResult, Formatter};
 use crate::utils::get_next_word;
 
+#[derive(Debug)]
 pub struct Request<'buf> {
     path: &'buf str,
     query: Option<QueryString<'buf>>,
