@@ -1,8 +1,7 @@
 use std::net::TcpListener;
 use std::io::Read;
-use std::convert::{TryFrom,TryInto};
+use std::convert::TryFrom;
 use super::http::Request;
-use super::utils::get_next_word;
 
 pub struct Server {
     address: String,
