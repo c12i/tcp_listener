@@ -29,6 +29,7 @@ impl TryFrom<&[u8]> for Request {
         let (method, request) = get_next_word(request).ok_or(ParseError::InvalidRequest)?;
         let (mut path, request) = get_next_word(request).ok_or(ParseError::InvalidRequest)?;
         let (protocol, _) = get_next_word(request).ok_or(ParseError::InvalidRequest)?;
+
         // check http type
         if protocol != "HTTP/1.1" {
             return Err(ParseError::InvalidProtocol);
@@ -36,8 +37,9 @@ impl TryFrom<&[u8]> for Request {
 
         let method:Method = method.parse()?;
 
+        // handling the query string, if present, reassign to query var
+        // else leave as None
         let mut query_string = None;
-
         if let Some(i) = path.find('?') {
             query_string = Some(&path[i+1..]);
             path = &path[..i];
