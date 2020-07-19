@@ -27,11 +27,10 @@ impl Server {
                     match stream.read(&mut buffer) {
                         Ok(_) => {
                             println!("Received a request: {}", String::from_utf8_lossy(&buffer));
-                            Request::try_from(&buffer[..]);
-                            // match &buffer[..].try_into() {
-                            //     Ok(request) => {},
-                            //     Err(err) => println!("Failed to parse a request: {}", err),
-                            // };
+                            match Request::try_from(&buffer[..]) {
+                                Ok(request) => {},
+                                Err(err) => println!("Failed to parse a request: {}", err),
+                            };
                         },
                         Err(err) => println!("Failed to read from connection: {}", err),
                     }
