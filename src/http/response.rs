@@ -1,3 +1,5 @@
+use super::StatusCode;
+
 #[derive(Debug)]
 pub struct Response {
     status: StatusCode,
@@ -12,6 +14,3 @@ impl Response {
         }
     }
 }
-
-#[derive(Debug)]
-pub enum StatusCode {}
