@@ -13,12 +13,6 @@ pub struct Request<'buf> {
     method: Method,
 }
 
-impl<'buf> Request<'buf> {
-    fn from_byte_array(buffer: &[u8]) -> Result<Self, String> {
-        unimplemented!()
-    }
-}
-
 // when we implement `TryFrom`, the compiler will auto-generate code that implements `TryInto` trait for type T
 impl<'buf> TryFrom<&'buf[u8]> for Request<'buf> {
     type Error = ParseError;
