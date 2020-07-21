@@ -13,7 +13,7 @@ impl RequestHandler {
         }
     }
 
-    fn read_html(&self, file_path: &str) -> Option<String> {
+    fn read_file(&self, file_path: &str) -> Option<String> {
         let path = format!("{}/{}", self.public_path, file_path);
         fs::read_to_string(path).ok()
     }
@@ -23,9 +23,12 @@ impl Handler for RequestHandler {
     fn handle_request(&mut self, request: &Request) -> Response {
         match request.method() {
             Method::GET => match request.path() {
-                "/" => Response::new(StatusCode::Ok, self.read_html("index.html")),
-                "/helge" => Response::new(StatusCode::Ok, self.read_html("helge.html")),
-                _ => Response::new(StatusCode::NotFound, None)
+                "/" => Response::new(StatusCode::Ok, self.read_file("index.html")),
+                "/helge" => Response::new(StatusCode::Ok, self.read_file("helge.html")),
+                path => match self.read_file(path) {
+                    Some(contents) => Response::new(StatusCode::Ok, Some(contents)),
+                    None => Response::new(StatusCode::NotFound, None),
+                },
             }
             _ => Response::new(StatusCode::NotFound, None)
         }
