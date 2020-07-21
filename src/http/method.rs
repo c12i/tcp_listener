@@ -1,4 +1,5 @@
 use std::str::FromStr;
+use std::fmt::{Display,Result as FmtResult,Formatter};
 
 #[derive(Debug)]
 pub enum Method {
@@ -33,3 +34,10 @@ impl FromStr for Method {
 }
 
 pub struct MethodError;
+
+impl Display for MethodError {
+    fn fmt(&self, f: &mut Formatter) -> FmtResult {
+        let error_message = "Method Error";
+        write!(f, "{}", error_message)
+    }
+}
