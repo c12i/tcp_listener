@@ -1,6 +1,6 @@
 use super::server::Handler;
 use super::http::{Request, Response,StatusCode,Method};
-use macroz::tostr;
+use std::fs;
 
 pub struct RequestHandler {
     public_path: String,
@@ -12,14 +12,19 @@ impl RequestHandler {
             public_path
         }
     }
+
+    fn read_html(&self, file_path: &str) -> Option<String> {
+        let path = format!("{}/{}", self.public_path, file_path);
+        fs::read_to_string(path).ok()
+    }
 }
 
 impl Handler for RequestHandler {
     fn handle_request(&mut self, request: &Request) -> Response {
         match request.method() {
             Method::GET => match request.path() {
-                "/" => Response::new(StatusCode::Ok, Some(tostr!("<h1>Home page</h1>"))),
-                "/hello" => Response::new(StatusCode::Ok, Some(tostr!("<h1>Hello</h1>"))),
+                "/" => Response::new(StatusCode::Ok, self.read_html("index.html")),
+                "/helge" => Response::new(StatusCode::Ok, self.read_html("helge.html")),
                 _ => Response::new(StatusCode::NotFound, None)
             }
             _ => Response::new(StatusCode::NotFound, None)
