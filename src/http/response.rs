@@ -1,5 +1,4 @@
 use std::fmt::{Display,Formatter,Result as FmtResult};
-use std::net::TcpStream;
 use std::io::{Write, Result as IoResult};
 use super::StatusCode;
 
@@ -17,10 +16,10 @@ impl Response {
         }
     }
 
-    pub fn send(&self, stream: &mut TcpStream) -> IoResult<()> {
+    pub fn send<T:Write>(&self, stream: &mut T) -> IoResult<()> {
         let body = match &self.body {
             Some(b) => b,
-            None => ""
+            None => "",
         };
 
         // write to stream w/o allocating memory to the heap
@@ -29,7 +28,7 @@ impl Response {
 }
 
 impl Display for Response {
-    fn fmt(&self, f: &mut Formatter) -> FmtResult {
+    fn fmt(&self, _f: &mut Formatter) -> FmtResult {
         unimplemented!()
     }
 }

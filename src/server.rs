@@ -1,5 +1,5 @@
 use std::net::TcpListener;
-use std::io::{Read,Write};
+use std::io::Read;
 use std::convert::TryFrom;
 use super::http::{Request,Response,StatusCode};
 
