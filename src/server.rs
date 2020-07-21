@@ -33,7 +33,7 @@ impl Server {
                                 },
                                 Err(err) => {
                                     println!("Failed to parse a request: {}", err);
-                                    Response::new(StatusCode::BadRequest, None).send(&mut stream)
+                                    Response::new(StatusCode::BadRequest, None)
                                 },
                             };
 
