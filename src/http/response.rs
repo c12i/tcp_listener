@@ -22,6 +22,8 @@ impl Response {
             Some(b) => b,
             None => ""
         };
+
+        // write to stream w/o allocating memory to the heap
         write!(stream, "HTTP/1.1 {} {}\r\n\r\n{}", self.status, self.status.reason_phrase(),body)
     }
 }
