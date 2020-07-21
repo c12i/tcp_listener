@@ -1,8 +1,7 @@
 use std::net::TcpListener;
 use std::io::{Read,Write};
 use std::convert::TryFrom;
-use super::http::{Request,Response};
-use crate::http::StatusCode;
+use super::http::{Request,Response,StatusCode};
 
 pub struct Server {
     address: String,
