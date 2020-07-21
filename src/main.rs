@@ -4,9 +4,10 @@ mod server;
 mod http;
 mod utils;
 
+use macroz::tostr;
 use server::Server;
 
 fn main() {
-    let server = Server::new(String::from("127.0.0.1:8080"));
+    let server = Server::new(tostr!("127.0.0.1:8080"));
     server.run();
 }
