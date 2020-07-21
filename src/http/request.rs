@@ -14,15 +14,15 @@ pub struct Request<'buf> {
 }
 
 impl<'buf> Request<'buf> {
-    fn path(&self) -> &str {
+    pub fn path(&self) -> &str {
         &self.path
     }
 
-    fn query(&self) -> Option<&QueryString> {
+    pub fn query(&self) -> Option<&QueryString> {
         self.query.as_ref()
     }
 
-    fn method(&self) -> &Method {
+    pub fn method(&self) -> &Method {
         &self.method
     }
 }
