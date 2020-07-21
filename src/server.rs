@@ -1,7 +1,16 @@
 use std::net::TcpListener;
 use std::io::Read;
 use std::convert::TryFrom;
-use super::http::{Request,Response,StatusCode};
+use super::http::{Request,Response,StatusCode,ParseError};
+
+pub trait Handler {
+    fn handle_request(&mut self, request: &Request) -> Response;
+    
+    fn handle_bad_request(&mut self, err: &ParseError) -> Response {
+        println!("Failed to parse a request: {}", err);
+        Response::new(StatusCode::BadRequest, None)
+    }
+}
 
 pub struct Server {
     address: String,
@@ -14,7 +23,7 @@ impl Server {
         }
     }
 
-    pub fn run(self) {
+    pub fn run(self, mut handler: impl Handler) {
         println!("Server running on http://{}", self.address);
         let listener = TcpListener::bind(&self.address).expect("Error binding TcpListener");
 
@@ -28,12 +37,10 @@ impl Server {
                             println!("Received a request: {}", String::from_utf8_lossy(&buffer));
                             let response = match Request::try_from(&buffer[..]) {
                                 Ok(request) => {
-                                    dbg!(request);
-                                    Response::new(StatusCode::Ok, Some(String::from("<h1>Hello World</h1>")))
+                                   handler.handle_request(&request)
                                 },
                                 Err(err) => {
-                                    println!("Failed to parse a request: {}", err);
-                                    Response::new(StatusCode::BadRequest, None)
+                                    handler.handle_bad_request(&err)
                                 },
                             };
 
