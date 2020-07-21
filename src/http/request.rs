@@ -13,6 +13,20 @@ pub struct Request<'buf> {
     method: Method,
 }
 
+impl<'buf> Request<'buf> {
+    fn path(&self) -> &str {
+        &self.path
+    }
+
+    fn query(&self) -> Option<&QueryString> {
+        self.query.as_ref()
+    }
+
+    fn method(&self) -> &Method {
+        &self.method
+    }
+}
+
 // when we implement `TryFrom`, the compiler will auto-generate code that implements `TryInto` trait for type T
 impl<'buf> TryFrom<&'buf[u8]> for Request<'buf> {
     type Error = ParseError;
