@@ -31,8 +31,6 @@ impl Server {
                                 Ok(request) => {
                                     dbg!(request);
                                     Response::new(StatusCode::Ok, Some(String::from("<h1>Hello World</h1>")))
-                                    // write!(stream, "{}", response);
-                                    // response.send(&mut stream)
                                 },
                                 Err(err) => {
                                     println!("Failed to parse a request: {}", err);
