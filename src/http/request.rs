@@ -27,12 +27,15 @@ impl<'buf> Request<'buf> {
     }
 }
 
+// Type aliasing
+type HttpResult<'buf, T> = Result<T, ParseError>;
+
 // when we implement `TryFrom`, the compiler will auto-generate code that implements `TryInto` trait for type T
 impl<'buf> TryFrom<&'buf[u8]> for Request<'buf> {
     type Error = ParseError;
 
     // to => GET /search?name=example&sort=1 HTTP/1.1
-    fn try_from(value: &'buf[u8]) -> Result<Request<'buf>, Self::Error> {
+    fn try_from(value: &'buf[u8]) -> HttpResult<Request<'buf>> {
         // convert &[u8] to &str
         let request = str::from_utf8(value)?;
 
