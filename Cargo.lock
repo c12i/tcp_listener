@@ -3,12 +3,3 @@
 [[package]]
 name = "helge"
 version = "0.1.0"
-dependencies = [
- "macroz",
-]
-
-[[package]]
-name = "macroz"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7bf5441c33c2a156c00d392417167fb86795cc09dc41257d5c0e62ef1e2fe338"
