@@ -1,5 +1,5 @@
 [package]
-name = "helge"
+name = "tcp1"
 version = "0.1.0"
 authors = ["Collins Muriuki <murerwacollins@gmail.com>"]
 edition = "2018"
