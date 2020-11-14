@@ -1,5 +1,5 @@
+use std::fmt::{Display, Formatter, Result as FmtResult};
 use std::str::FromStr;
-use std::fmt::{Display,Result as FmtResult,Formatter};
 
 #[derive(Debug)]
 pub enum Method {
@@ -11,7 +11,7 @@ pub enum Method {
     OPTIONS,
     TRACE,
     CONNECT,
-    HEAD
+    HEAD,
 }
 
 impl FromStr for Method {

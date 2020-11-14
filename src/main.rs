@@ -1,13 +1,13 @@
 #![allow(dead_code)]
 
-mod server;
 mod http;
-mod utils;
 mod request_handler;
+mod server;
+mod utils;
 
-use std::env;
-use server::Server;
 use request_handler::RequestHandler;
+use server::Server;
+use std::env;
 
 fn main() {
     // read env variables at compile time

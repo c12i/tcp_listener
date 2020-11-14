@@ -29,24 +29,19 @@ impl<'buf> From<&'buf str> for QueryString<'buf> {
             // find equal sign and reassign key, val
             if let Some(i) = sub_str.find('=') {
                 key = &sub_str[..i];
-                val = &sub_str[i+1..];
+                val = &sub_str[i + 1..];
             }
 
             data.entry(key)
-                .and_modify(|existing_val: &mut Value| {
-                    match existing_val {
-                        Value::Single(prev_value) => {
-                            *existing_val = Value::Multiple(vec![prev_value, val]);
-                        },
-                        Value::Multiple(vec) => vec.push(val),
+                .and_modify(|existing_val: &mut Value| match existing_val {
+                    Value::Single(prev_value) => {
+                        *existing_val = Value::Multiple(vec![prev_value, val]);
                     }
+                    Value::Multiple(vec) => vec.push(val),
                 })
                 .or_insert(Value::Single(val));
-
         }
 
-        QueryString {
-            data
-        }
+        QueryString { data }
     }
 }
