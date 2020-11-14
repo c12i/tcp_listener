@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["tcp1"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html\" title=\"trait core::marker::Copy\">Copy</a> for <a class=\"enum\" href=\"tcp1/http/status_code/enum.StatusCode.html\" title=\"enum tcp1::http::status_code::StatusCode\">StatusCode</a>","synthetic":false,"types":["tcp1::http::status_code::StatusCode"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
